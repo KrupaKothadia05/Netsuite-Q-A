@@ -1,8 +1,12 @@
 
 import os
+os.environ['KMP_DUPLICATE_LIB_OK']='True'
 import re
 import pandas as pd
-import requests
+# import requests
+
+from haystack.utils import launch_es
+launch_es()
 
 from haystack.document_stores import ElasticsearchDocumentStore
 
@@ -33,26 +37,45 @@ for _, row in data.iterrows():
 import os
 from haystack.document_stores import ElasticsearchDocumentStore
 
+# # Get the host where Elasticsearch is running, default to localhost
+# host = os.environ.get("ELASTICSEARCH_HOST", "localhost")
+# elastic_document_store = ElasticsearchDocumentStore(host=host, username="", password="", index="document-dim", similarity="cosine")
+
+
+
 # Get the host where Elasticsearch is running, default to localhost
 host = os.environ.get("ELASTICSEARCH_HOST", "localhost")
-elastic_document_store = ElasticsearchDocumentStore(host=host, username="", password="", index="document-dim", similarity="cosine")
+elastic_document_store = ElasticsearchDocumentStore(host=host, username="", password="", index="document-dim-2", similarity="cosine", recreate_index=True, embedding_dim=384)
 
 elastic_document_store.write_documents(docs)
 print(f"Loaded {elastic_document_store.get_document_count()} documents")
 
 
 # Define the BM25 Retriever
-from haystack.nodes import BM25Retriever
+# from haystack.nodes import BM25Retriever
 
-bm25_retriever = BM25Retriever(elastic_document_store)
+# bm25_retriever = BM25Retriever(elastic_document_store)
+
+from haystack.nodes import EmbeddingRetriever
+
+embedding_retriever = EmbeddingRetriever(
+    document_store=elastic_document_store,
+    embedding_model="sentence-transformers/all-MiniLM-L6-v2",
+    model_format="sentence_transformers",
+)
+
+elastic_document_store.update_embeddings(embedding_retriever)
 
 
 from haystack.nodes import FARMReader
 model = "deepset/roberta-base-squad2"
 reader = FARMReader(model, use_gpu=True)
 
-from haystack.pipelines import ExtractiveQAPipeline
-pipeline = ExtractiveQAPipeline(reader, bm25_retriever)
+# from haystack.pipelines import ExtractiveQAPipeline
+# pipeline = ExtractiveQAPipeline(reader, bm25_retriever)
+
+from haystack.pipelines import ExtravtiveQAPipeline
+pipeline = ExtravtiveQAPipeline(reader, embedding_retriever)
 
 query = "how to create purchase order?"
 result = pipeline.run(query=query, params={"Retriever": {"top_k": 10}, "Reader": {"top_k": 10}})
