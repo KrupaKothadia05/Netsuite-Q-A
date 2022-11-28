@@ -74,8 +74,8 @@ reader = FARMReader(model, use_gpu=True)
 # from haystack.pipelines import ExtractiveQAPipeline
 # pipeline = ExtractiveQAPipeline(reader, bm25_retriever)
 
-from haystack.pipelines import ExtravtiveQAPipeline
-pipeline = ExtravtiveQAPipeline(reader, embedding_retriever)
+from haystack.pipelines import ExtractiveQAPipeline
+pipeline = ExtractiveQAPipeline(reader, embedding_retriever)
 
 query = "how to create purchase order?"
 result = pipeline.run(query=query, params={"Retriever": {"top_k": 10}, "Reader": {"top_k": 10}})
