@@ -48,9 +48,9 @@ This will
 ## Model
 - Model experimentation performed in `Netsuite_QA.ipynb`
 - [Embedding Retriever](https://docs.haystack.deepset.ai/docs/retriever) selected for its ability to retrieve relevant documents from a large corpus of documents
-- Embedding Model: [sentence-transformers/all-MiniLM-L6-v2](https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2)
+    - Embedding Model: [sentence-transformers/all-MiniLM-L6-v2](https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2)
 - [FARMReader](https://docs.haystack.deepset.ai/docs/reader) selected for its ability to extract answers from a given document
-- Reader Model: [deepset/roberta-base-squad2](https://huggingface.co/deepset/roberta-base-squad2)
+    - Reader Model: [deepset/roberta-base-squad2](https://huggingface.co/deepset/roberta-base-squad2)
 
 
 ## References
