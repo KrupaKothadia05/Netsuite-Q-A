@@ -8,6 +8,25 @@ The NetSuite application suite contains extensive documentation to guide a user 
 2. `pip install streamlit`
 3. `pip install uvicorn`
 
+## Dataset
+
+- [NetSuite Documentation](https://docs.oracle.com/cloud/latest/netsuitecs_gs/NSCSUG/index.html)
+
+- Extracted with `data_extraction.ipynb`
+
+- Training Data: `data_with_text.csv`
+    - Contains 17,936 unique HTML pages
+- Test Data: `test_data_2.csv`
+    - Contains 60 unique queries and their corresponding document names
+
+## Model
+- Model experimentation performed in `Netsuite_QA.ipynb`
+- [Embedding Retriever](https://docs.haystack.deepset.ai/docs/retriever) selected for its ability to retrieve relevant documents from a large corpus of documents
+    - Embedding Model: [sentence-transformers/all-MiniLM-L6-v2](https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2)
+- [FARMReader](https://docs.haystack.deepset.ai/docs/reader) selected for its ability to extract answers from a given document
+    - Reader Model: [deepset/roberta-base-squad2](https://huggingface.co/deepset/roberta-base-squad2)
+
+
 ## Start ElasticSearch
 
 To initialize ElasticDocumentStore Docker Container
@@ -34,23 +53,6 @@ This will
 ![image](images/UI.png)
 
 
-## Dataset
-
-- [NetSuite Documentation](https://docs.oracle.com/cloud/latest/netsuitecs_gs/NSCSUG/index.html)
-
-- Extracted with `data_extraction.ipynb`
-
-- Training Data: `data_with_text.csv`
-    - Contains 17,936 unique HTML pages
-- Test Data: `test_data_2.csv`
-    - Contains 60 unique queries and their corresponding document names
-
-## Model
-- Model experimentation performed in `Netsuite_QA.ipynb`
-- [Embedding Retriever](https://docs.haystack.deepset.ai/docs/retriever) selected for its ability to retrieve relevant documents from a large corpus of documents
-    - Embedding Model: [sentence-transformers/all-MiniLM-L6-v2](https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2)
-- [FARMReader](https://docs.haystack.deepset.ai/docs/reader) selected for its ability to extract answers from a given document
-    - Reader Model: [deepset/roberta-base-squad2](https://huggingface.co/deepset/roberta-base-squad2)
 
 
 ## References
